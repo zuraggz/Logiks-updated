@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:legos/services/lego_service.dart';
+import 'package:legos/views/home_view.dart';
 
-void main()  {
+void main() {
   runApp(const MyApp());
 }
 
@@ -13,8 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: ThemeData(useMaterial3: true),
+
+      home: const HomeView(),
     );
   }
 }
