@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:legos/view_models/home_view_model.dart';
+import 'package:legos/views/add_lego_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -42,6 +43,14 @@ class _HomeViewState extends State<HomeView> {
         listenable: _viewModel,
         builder: (context, child) => _buildBody(),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _openAddPage,
+        backgroundColor: const Color.fromRGBO(7, 100, 176, 1),
+        label: Text(
+          "Add New Lego",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+      ),
     );
   }
 
@@ -71,15 +80,32 @@ class _HomeViewState extends State<HomeView> {
     }
 
     return ListView.builder(
+      padding: const EdgeInsets.all(12),
       itemCount: _viewModel.allLegosList.length,
       itemBuilder: (context, index) {
         final lego = _viewModel.allLegosList[index];
-        return ListTile(
-          leading: Text("${index + 1}"),
-          title: Text(lego.name),
-          subtitle: Text(lego.id ?? ""),
+        return Card(
+          elevation: 3,
+          margin: const EdgeInsets.symmetric(vertical: 6),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
+            leading: Text("${index + 1}"),
+            title: Text(lego.name),
+            subtitle: Text(lego.id ?? ""),
+          ),
         );
       },
     );
+  }
+
+  Future<void> _openAddPage() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const AddLegoView()),
+    );
+    _viewModel.fetchAllLegos();
   }
 }
